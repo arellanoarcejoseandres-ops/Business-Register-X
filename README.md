@@ -2,194 +2,398 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Register X v1.0 | José Andrés Arellano Arce</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#6200ee">
+    <title>Business Register X</title>
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Tailwind for Layout Quick Utilities -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* CSS INTEGRADO */
         :root {
-            --primary-color: #1a73e8;
-            --secondary-color: #0d47a1;
-            --bg-color: #f8f9fa;
-            --text-color: #202124;
-            --accent-color: #e8f0fe;
+            --primary: #6200ee;
+            --primary-variant: #3700b3;
+            --secondary: #03dac6;
+            --background: #f5f5f7;
+            --surface: #ffffff;
+            --error: #b00020;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background);
             margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            user-select: none;
+            overflow-x: hidden;
         }
 
-        header {
-            background-color: var(--primary-color);
+        .app-bar {
+            background-color: var(--primary);
             color: white;
-            padding: 3rem 1rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
-        header h1 { margin: 0; font-size: 2.5rem; }
-        header p { margin: 10px 0 0; font-size: 1.1rem; opacity: 0.9; }
-
-        .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 20px;
+        .nav-bottom {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: var(--surface);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 50;
         }
 
-        section {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #757575;
+            font-size: 0.75rem;
+            cursor: pointer;
         }
 
-        h2 {
-            color: var(--secondary-color);
-            border-left: 5px solid var(--primary-color);
-            padding-left: 15px;
-            margin-top: 0;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+        .nav-item.active {
+            color: var(--primary);
         }
 
         .card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .fab {
+            position: fixed;
+            right: 1.5rem;
+            bottom: 5rem;
+            background: var(--primary);
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(98, 0, 238, 0.4);
+            z-index: 40;
+        }
+
+        .view {
+            display: none;
+            padding: 1rem;
+            padding-bottom: 6rem;
+        }
+
+        .view.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
             border: 1px solid #ddd;
             border-radius: 8px;
-            padding: 15px;
-            background: var(--accent-color);
+            outline: none;
         }
 
-        .card h3 { margin-top: 0; color: var(--primary-color); }
-
-        .tech-tags span {
-            display: inline-block;
-            background: #e0e0e0;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin: 5px;
-        }
-
-        .btn-download {
-            display: inline-block;
-            background: #28a745;
+        .btn-primary {
+            background: var(--primary);
             color: white;
-            padding: 12px 25px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-            margin-top: 10px;
+            padding: 0.75rem;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: 500;
         }
 
-        .btn-download:hover { background: #218838; }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        code {
-            background: #272822;
-            color: #f8f8f2;
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-family: monospace;
+        .stat-val {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Business Register X <small>v1.0</small></h1>
-        <p>Desarrollado por: <strong>José Andrés Arellano Arce</strong></p>
-        <p>3° TDS - Tecnología en Desarrollo de Software</p>
-    </header>
-
-    <div class="container">
-        
-        <section>
-            <h2>Entregables del Proyecto</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Aplicación Android</h3>
-                    <p>Descarga el instalador APK para probar el sistema de inventario en tu dispositivo.</p>
-                    <a href="TU_LINK_DE_GITHUB_AQUI" class="btn-download">⬇️ Descargar APK</a>
-                </div>
-                <div class="card">
-                    <h3>Video Demostrativo</h3>
-                    <p>Explicación técnica del código y funcionamiento de la base de datos.</p>
-                    <a href="TU_LINK_DE_VIDEO_AQUI" style="color: var(--primary-color);">Ver Video en YouTube →</a>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Stack Tecnológico</h2>
-            <div class="tech-tags">
-                <span>Kotlin</span>
-                <span>Firebase Auth</span>
-                <span>Realtime Database</span>
-                <span>Android Jetpack</span>
-                <span>Retrofit</span>
-                <span>GitHub</span>
-            </div>
-        </section>
-
-        <section>
-            <h2>Conceptos de Programación Aplicados</h2>
-            
-            <div class="card" style="background: white; border: none; border-left: 4px solid #ffc107; margin-bottom: 15px;">
-                <h3>1. Sentencias de Control</h3>
-                <p>Se utilizaron estructuras <code>if-else</code> para la validación de formularios. Por ejemplo, antes de subir un producto a la nube, el sistema verifica que el campo de "Precio" no sea menor a cero y que el "Nombre" no esté vacío, garantizando la integridad de la base de datos.</p>
-            </div>
-
-            <div class="card" style="background: white; border: none; border-left: 4px solid #4caf50; margin-bottom: 15px;">
-                <h3>2. Funciones y Métodos</h3>
-                <p>La lógica se organizó en funciones modulares como <code>saveProductToCloud()</code> y <code>clearInputs()</code>. Esto permite que el código sea limpio y que la tarea de limpiar la interfaz se pueda invocar en cualquier momento sin repetir código.</p>
-            </div>
-
-            <div class="card" style="background: white; border: none; border-left: 4px solid #2196f3; margin-bottom: 15px;">
-                <h3>3. Programación Orientada a Objetos (POO)</h3>
-                <p>El proyecto utiliza <strong>Data Classes</strong> para representar objetos del mundo real. La clase <code>Product</code> encapsula los atributos (ID, nombre, cantidad, precio), permitiendo manipular cada registro como una instancia de objeto única que se mapea directamente a un JSON en Firebase.</p>
-            </div>
-        </section>
-
-        <section>
-            <h2>Galería de la Aplicación</h2>
-            <p>Capturas de pantalla de la interfaz desarrollada con apoyo de IA:</p>
-            <div class="grid">
-                <div style="text-align: center;">
-                    <div style="width: 100%; height: 200px; background: #ddd; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
-                        [Imagen: Formulario de Registro]
-                    </div>
-                    <p><small>Vista Principal de Registro</small></p>
-                </div>
-                <div style="text-align: center;">
-                    <div style="width: 100%; height: 200px; background: #ddd; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
-                        [Imagen: Consola Firebase]
-                    </div>
-                    <p><small>Datos Sincronizados en la Nube</small></p>
-                </div>
-            </div>
-        </section>
-
+    <!-- Header -->
+    <div class="app-bar flex justify-between items-center">
+        <h1 class="text-xl font-bold tracking-tight">Business Register X</h1>
+        <i class="material-icons">account_circle</i>
     </div>
 
-    <footer>
-        &copy; 2026 José Andrés Arellano Arce | Instituto Tecnológico Superior | 3° TDS
-    </footer>
+    <!-- Main Views -->
+    <main id="app">
+        
+        <!-- Dashboard View -->
+        <section id="view-dashboard" class="view active">
+            <h2 class="text-lg font-medium mb-4">Resumen de Hoy</h2>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="card flex flex-col items-center">
+                    <span class="text-gray-500 text-sm">Ventas Totales</span>
+                    <span id="stat-sales" class="stat-val">$0.00</span>
+                </div>
+                <div class="card flex flex-col items-center">
+                    <span class="text-gray-500 text-sm">Transacciones</span>
+                    <span id="stat-count" class="stat-val">0</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="font-bold mb-2">Actividad Reciente</h3>
+                <div id="recent-list" class="divide-y">
+                    <p class="text-gray-400 py-4 text-center">No hay registros recientes</p>
+                </div>
+            </div>
+        </section>
 
+        <!-- Inventory View -->
+        <section id="view-inventory" class="view">
+            <h2 class="text-lg font-medium mb-4">Inventario de Productos</h2>
+            <div id="inventory-list">
+                <!-- Items populate here -->
+            </div>
+        </section>
+
+        <!-- Sales/Add View -->
+        <section id="view-add" class="view">
+            <div class="card">
+                <h2 class="text-lg font-bold mb-4">Nueva Venta</h2>
+                <label>Producto</label>
+                <select id="sale-product"></select>
+                <label>Cantidad</label>
+                <input type="number" id="sale-qty" placeholder="0" min="1">
+                <button onclick="processSale()" class="btn-primary mt-4">Registrar Venta</button>
+            </div>
+
+            <div class="card mt-4">
+                <h2 class="text-lg font-bold mb-4">Nuevo Producto</h2>
+                <input type="text" id="prod-name" placeholder="Nombre del producto">
+                <input type="number" id="prod-price" placeholder="Precio ($)">
+                <input type="number" id="prod-stock" placeholder="Stock inicial">
+                <button onclick="addProduct()" class="btn-primary mt-4 bg-teal-500">Añadir al Inventario</button>
+            </div>
+        </section>
+
+        <!-- Reports View -->
+        <section id="view-reports" class="view">
+            <h2 class="text-lg font-medium mb-4">Reportes Detallados</h2>
+            <div class="card bg-purple-50">
+                <p class="text-sm">Ventas del Mes</p>
+                <div id="report-chart" class="h-32 flex items-end gap-2 mt-4">
+                    <!-- Fake chart bars -->
+                    <div class="bg-purple-300 w-full" style="height: 40%"></div>
+                    <div class="bg-purple-400 w-full" style="height: 60%"></div>
+                    <div class="bg-purple-300 w-full" style="height: 35%"></div>
+                    <div class="bg-purple-600 w-full" style="height: 80%"></div>
+                    <div class="bg-purple-500 w-full" style="height: 55%"></div>
+                </div>
+            </div>
+            <button onclick="clearAllData()" class="text-red-500 text-sm mt-8 w-full text-center">Reiniciar base de datos</button>
+        </section>
+
+    </main>
+
+    <!-- Navigation -->
+    <nav class="nav-bottom">
+        <div class="nav-item active" onclick="switchView('dashboard')">
+            <i class="material-icons">dashboard</i>
+            <span>Inicio</span>
+        </div>
+        <div class="nav-item" onclick="switchView('inventory')">
+            <i class="material-icons">inventory_2</i>
+            <span>Stock</span>
+        </div>
+        <div class="nav-item" onclick="switchView('add')">
+            <i class="material-icons">add_box</i>
+            <span>Añadir</span>
+        </div>
+        <div class="nav-item" onclick="switchView('reports')">
+            <i class="material-icons">analytics</i>
+            <span>Reportes</span>
+        </div>
+    </nav>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-black text-white px-6 py-2 rounded-full opacity-0 transition-opacity pointer-events-none">
+        Mensaje
+    </div>
+
+    <script>
+        // State Management
+        let data = {
+            inventory: [],
+            sales: []
+        };
+
+        // Initialize App
+        window.onload = () => {
+            const savedData = localStorage.getItem('business_register_x_data');
+            if(savedData) {
+                data = JSON.parse(savedData);
+            } else {
+                // Default mock data
+                data.inventory = [
+                    { id: 1, name: "Producto Ejemplo", price: 10.50, stock: 100 }
+                ];
+            }
+            renderAll();
+        };
+
+        function saveData() {
+            localStorage.setItem('business_register_x_data', JSON.stringify(data));
+        }
+
+        // Navigation Logic
+        function switchView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById(`view-${viewId}`).classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            renderAll();
+        }
+
+        // Inventory Logic
+        function addProduct() {
+            const name = document.getElementById('prod-name').value;
+            const price = parseFloat(document.getElementById('prod-price').value);
+            const stock = parseInt(document.getElementById('prod-stock').value);
+
+            if(!name || !price || isNaN(stock)) {
+                showToast("Por favor rellena todos los campos");
+                return;
+            }
+
+            const newProd = {
+                id: Date.now(),
+                name,
+                price,
+                stock
+            };
+
+            data.inventory.push(newProd);
+            saveData();
+            renderAll();
+            showToast("Producto añadido");
+            
+            // Clear inputs
+            document.getElementById('prod-name').value = '';
+            document.getElementById('prod-price').value = '';
+            document.getElementById('prod-stock').value = '';
+        }
+
+        // Sales Logic
+        function processSale() {
+            const prodId = document.getElementById('sale-product').value;
+            const qty = parseInt(document.getElementById('sale-qty').value);
+
+            if(!prodId || isNaN(qty) || qty <= 0) {
+                showToast("Cantidad inválida");
+                return;
+            }
+
+            const product = data.inventory.find(p => p.id == prodId);
+            if(product.stock < qty) {
+                showToast("Stock insuficiente");
+                return;
+            }
+
+            product.stock -= qty;
+            const sale = {
+                id: Date.now(),
+                productName: product.name,
+                qty: qty,
+                total: product.price * qty,
+                date: new Date().toLocaleTimeString()
+            };
+
+            data.sales.unshift(sale);
+            saveData();
+            renderAll();
+            showToast("Venta registrada con éxito");
+            document.getElementById('sale-qty').value = '';
+        }
+
+        // UI Rendering
+        function renderAll() {
+            renderInventory();
+            renderDashboard();
+            updateProductSelect();
+        }
+
+        function renderInventory() {
+            const container = document.getElementById('inventory-list');
+            container.innerHTML = data.inventory.map(p => `
+                <div class="card flex justify-between items-center">
+                    <div>
+                        <h4 class="font-bold text-gray-800">${p.name}</h4>
+                        <p class="text-sm text-gray-500">$${p.price.toFixed(2)} | Stock: ${p.stock}</p>
+                    </div>
+                    <div class="${p.stock < 10 ? 'text-red-500' : 'text-green-500'}">
+                        <i class="material-icons">${p.stock < 10 ? 'warning' : 'check_circle'}</i>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderDashboard() {
+            const total = data.sales.reduce((acc, curr) => acc + curr.total, 0);
+            document.getElementById('stat-sales').innerText = `$${total.toFixed(2)}`;
+            document.getElementById('stat-count').innerText = data.sales.length;
+
+            const recentContainer = document.getElementById('recent-list');
+            if(data.sales.length === 0) {
+                recentContainer.innerHTML = `<p class="text-gray-400 py-4 text-center">No hay registros hoy</p>`;
+            } else {
+                recentContainer.innerHTML = data.sales.slice(0, 5).map(s => `
+                    <div class="py-3 flex justify-between">
+                        <div>
+                            <p class="font-medium">${s.productName}</p>
+                            <p class="text-xs text-gray-400">${s.date}</p>
+                        </div>
+                        <p class="text-green-600 font-bold">+$${s.total.toFixed(2)}</p>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updateProductSelect() {
+            const select = document.getElementById('sale-product');
+            select.innerHTML = data.inventory.map(p => `
+                <option value="${p.id}">${p.name} ($${p.price})</p>
+            `).join('');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.opacity = "1";
+            setTimeout(() => t.style.opacity = "0", 2000);
+        }
+
+        function clearAllData() {
+            if(confirm("¿Estás seguro de borrar todos los datos de Business Register X?")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+    </script>
 </body>
 </html>
